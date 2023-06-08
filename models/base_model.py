@@ -7,3 +7,5 @@ class BaseModel:
     ''' Base class for all other classes '''
     
 
+
+def main __init__(self):
