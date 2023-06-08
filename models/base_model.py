@@ -8,12 +8,9 @@ from datetime import datetime
 class BaseModel:
     ''' Base class for all other classes '''
 
-
-    def __init__(self):
-        ''' Initialization of the base model '''
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+    id = str(uuid.uuid4())
+    created_at = datetime.now()
+    updated_at = datetime.now()
 
     def __str__(self):
         ''' String representation of the BaseModel class '''
