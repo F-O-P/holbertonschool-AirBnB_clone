@@ -1,15 +1,13 @@
 #!/usr/bin/python3
-"""
-File containing Base model class for AirBnB - The Console
-"""
+''' File containing Base model class for AirBnB - The Console '''
 import uuid
 from datetime import datetime
 
 
 class BaseModel():
-    """Base Model Class"""
+    ''' Base Model Class '''
     def __init__(self, *args, **kwargs):
-        """Initialization of BaseModel class"""
+        ''' Initialization of BaseModel class '''
         from models import storage
         if kwargs:
             for key, value in kwargs.items():
