@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 ''' File Storage Module '''
 import json
-import os.path
+import os
 from models.base_model import BaseModel
 
 
@@ -27,10 +27,11 @@ class FileStorage:
 
     def reload(self):
         ''' Deserializes the JSON file to __objects '''
-        if os.path.exists(self.__file_path):
+        try:
             with open(self.__file_path, 'r', encoding='utf-8') as mmm_leftovers:
                 new_dict = json.load(mmm_leftovers)
                 for key, value in new_dict.items():
                     obj = eval(value['__class__'])(**value)
-                    key = key.split(".")[0]
                     self.__objects[key] = obj
+        except FileNotFoundError:
+            pass
