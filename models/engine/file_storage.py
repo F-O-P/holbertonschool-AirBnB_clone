@@ -2,9 +2,10 @@
 ''' File Storage Module '''
 import json
 import os
+from models.base_model import BaseModel
 
 
-class FileStorage():
+class FileStorage:
     ''' File Cabinet for storing objects '''
     __file_path = "file.json"
     __objects = {}
@@ -16,25 +17,21 @@ class FileStorage():
     def new(self, obj):
         ''' Sets in __objects the obj with key <obj class name>.id '''
         key = "{}.{}".format(obj.__class__.__name__, obj.id)
-        self.__objects[key] = obj
+        FileStorage.__objects[key] = obj
 
     def save(self):
         ''' Serializes __objects to the JSON file (path: __file_path) '''
-        new_dict = {}
-        for key, value in self.__objects.items():
-            new_dict[key] = value.to_dict()
-        with open(self.__file_path, mode="w", encoding="utf-8") as f:
-            json.dump(new_dict, f)
+        with open(self.__file_path, mode='w', encoding='utf-8') as save_for_later:
+            new_dict = {key: obj.to_dict() for key, obj in self.__objects.items()}
+            json.dump(new_dict, save_for_later)
 
     def reload(self):
         ''' Deserializes the JSON file to __objects '''
-        if os.path.exists(self.__file_path):
-            with open(self.__file_path, "r") as f:
-                new_dict = json.load(f)
-
-            for key, obj_dict in new_dict.items():
-                self.__objects[key] = eval(value["__class__"])(**value)
-                class_name = key.split('.')[0]
-                class_ = globals()[class_name]
-                obj = class_(**obj_dict)
-                self.__objects[key] = obj
+        try:
+            with open(self.__file_path, 'r', encoding='utf-8') as mmm_leftovers:
+                new_dict = json.load(mmm_leftovers)
+                for key, value in new_dict.items():
+                    obj = eval(value['__class__'])(**value)
+                    self.__objects[key] = obj
+        except FileNotFoundError:
+            pass
