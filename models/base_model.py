@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 ''' Base Class for all other classes '''
-from uuid import uuid4
+import uuid
 from datetime import datetime
 import models
 
@@ -12,7 +12,7 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
         ''' Constructor for BaseModel class '''
-        self.id = str(uuid4())
+        self.id = str(uuid.uuid4())
         self.created_at = self.updated_at = datetime.now()
         if kwargs:
             for key, value in kwargs.items():
@@ -21,11 +21,9 @@ class BaseModel:
                 if key != '__class__':
                     setattr(self, key, value)
                 if 'id' not in kwargs:
-                    self.id = str(uuid4())
+                    self.id = str(uuid.uuid4())
                     self.created_at = self.updated_at = datetime.now()
                 else:
-                    self.id = str(uuid4())
-                    self.created_at = self.updated_at = datetime.now()
                     models.storage.new(self)
 
     def __str__(self):
