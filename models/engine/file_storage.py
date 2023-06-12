@@ -32,5 +32,5 @@ class FileStorage:
                 new_dict = json.load(mmm_leftovers)
                 for key, value in new_dict.items():
                     obj = eval(value['__class__'])(**value)
-                    obj_key = key.split(".")[-1]
+                    key = key.split(".")[0]
                     self.__objects[key] = obj
