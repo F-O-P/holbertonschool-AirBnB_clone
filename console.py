@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 ''' command '''
 import cmd
+import json
+from models.base_model import BaseModel
+from models import storage
 
 class HBNBCommand(cmd.Cmd):
     ''' command class '''
@@ -25,48 +28,41 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, arg):
-        ''' creates a new instance of BaseModel '''
+        ''' creates a new instance of BaseModel 
+        saves it (to the JSON file) and prints the id'''
         if len(arg) == 0:
             print("** class name missing **")
-        elif arg != "BaseModel":
-            print("** class doesn't exist **")
+            return
         else:
-            from models.base_model import BaseModel
-            new = BaseModel()
-            new.save()
-            print(new.id)
-    
-    def do_show(self, arg):
-        ''' prints the string representation of an instance 
-        based on the class name and id '''
-        if len(arg) == 0:
-            print("** class name missing **")
-        elif arg != "BaseModel":
-            print("** class doesn't exist **")
-        else:
-            from models.base_model import BaseModel
-            print(BaseModel())
-    
-    def do_destroy(self, arg):
-        ''' deletes an instance based on the class name and id '''
-        if len(arg) == 0:
-            print("** class name missing **")
-        elif arg != "BaseModel":
-            print("** class doesn't exist **")
-        else:
-            from models.base_model import BaseModel
-            new = BaseModel()
-            new.save()
-            print(new.id)
+            try:
+                instance = eval(arg)()
+                instance.save()
+                print(instance.id)
+            except NameError:
+                print("** class doesn't exist **")
+                return
 
-    def do_all(self, arg):
-        ''' prints all string representation of all instances
-        based or not on the class name '''
-        if arg != "BaseModel":
-            print("** class doesn't exist **")
-        else:
-            from models.base_model import BaseModel
-            print(BaseModel())
+    def do_show(self, arg):
+        """Print the string representation of an instance"""
+        args = arg.split()
+        if not args:
+            print('** class name missing **')
+            return
+        if len(args) < 2:
+            print('** instance id missing **')
+            return
+        class_name = args[0]
+        instance_id = args[1]
+        if class_name not in HBNBCommand.class_list:
+            print('** class doesn\'t exist **')
+            return
+        objects = storage.all()
+        key = "{}.{}".format(class_name, instance_id)
+        if key not in objects:
+            print('** no instance found **')
+            return
+        obj = objects[key]
+        print(obj)
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
