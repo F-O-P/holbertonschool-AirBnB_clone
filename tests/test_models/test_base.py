@@ -61,8 +61,10 @@ class TestBaseModel(unittest.TestCase):
         '''Test that current datetime is used when value is created'''
 
         base_model = BaseModel()
+        current_time = datetime.now()
+        delta = current_time - base_model.created_at
 
-        self.assertEqual(base_model.created_at, datetime.now())
+        self.assertAlmostEqual(delta.total_seconds(), 0, delta=0.001)
 
 if __name__ == '__main__':
     unittest.main()

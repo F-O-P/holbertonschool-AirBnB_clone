@@ -3,7 +3,6 @@
 import uuid
 from datetime import datetime
 
-
 class BaseModel():
     ''' Base Model Class '''
     def __init__(self, *args, **kwargs):
