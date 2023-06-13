@@ -4,6 +4,12 @@ import cmd
 import json
 from models.base_model import BaseModel
 from models import storage
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
+from models.place import Place
 
 class HBNBCommand(cmd.Cmd):
     ''' command class '''
@@ -30,17 +36,21 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, arg):
         ''' creates a new instance of BaseModel 
         saves it (to the JSON file) and prints the id'''
-        if len(arg) == 0:
+        arg_str = arg.split()
+        if len(arg_str) == 0:
             print("** class name missing **")
             return
-        else:
-            try:
-                instance = eval(arg)()
-                instance.save()
-                print(instance.id)
-            except NameError:
-                print("** class doesn't exist **")
-                return
+        if arg not in HBNBCommand.classes:
+            print("** class doesn't exist **")
+            return
+        try:
+            class_name = eval(arg)()
+            class_name.save()
+            print(class_name.id)
+            return
+        except (NameError):
+            print("** class doesn't exist **")
+            return
 
     def do_show(self, arg):
         """Print the string representation of an instance"""
@@ -67,10 +77,10 @@ class HBNBCommand(cmd.Cmd):
     def do_destroy(self, arg):
         ''' Deletes an instance based on the class name and id
         (save the change into the JSON file) '''
-        args = arg.split()
-        if not args:
+        if not arg:
             print('** class name missing **')
             return
+        args = arg.split()
         if len(args) < 2:
             print('** instance id missing **')
             return
@@ -79,13 +89,14 @@ class HBNBCommand(cmd.Cmd):
         if class_name not in HBNBCommand.classes:
             print('** class doesn\'t exist **')
             return
-        objects = storage.all()
         key = "{}.{}".format(class_name, instance_id)
-        if key not in objects:
+        if key not in storage.all().keys():
             print('** no instance found **')
             return
-        del objects[key]
+        storage_dict = storage.all()
+        del storage_dict["{}.{}".format(class_name, instance_id)]
         storage.save()
+        return
 
     def do_all(self, arg):
         '''Prints all string representation of all instances'''
