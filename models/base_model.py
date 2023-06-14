@@ -3,6 +3,7 @@
 import uuid
 from datetime import datetime
 
+
 class BaseModel():
     ''' Base Model Class '''
     def __init__(self, *args, **kwargs):
@@ -38,4 +39,5 @@ class BaseModel():
 
     def __str__(self):
         """String representation function"""
-        return ("[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__))
+        return ("[{}] ({}) {}".format(self.__class__.__name__,
+                                      self.id, self.__dict__))

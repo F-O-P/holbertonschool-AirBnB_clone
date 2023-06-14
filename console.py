@@ -11,30 +11,31 @@ from models.amenity import Amenity
 from models.review import Review
 from models.place import Place
 
+
 class HBNBCommand(cmd.Cmd):
     ''' command class '''
     prompt = '(hbnb) '
     classes = ["Review", "Place", "State", "User",
-            "BaseModel", "City", "Amenity"]
+               "BaseModel", "City", "Amenity"]
 
     def do_quit(self, arg):
         ''' quit command '''
         return True
-    
+
     def do_EOF(self, arg):
         ''' EOF command '''
         return True
-    
+
     def do_help(self, arg):
         ''' help command '''
         cmd.Cmd.do_help(self, arg)
-    
+
     def emptyline(self):
         ''' empty line '''
         pass
 
     def do_create(self, arg):
-        ''' creates a new instance of BaseModel 
+        ''' creates a new instance of BaseModel
         saves it (to the JSON file) and prints the id'''
         arg_str = arg.split()
         if len(arg_str) == 0:
@@ -108,10 +109,14 @@ class HBNBCommand(cmd.Cmd):
             if args[0] not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            print([str(obj) for obj in objects.values() if type(obj).__name__ == args[0]])
+            print([str(obj) for obj in objects.values()
+                   if type(obj).__name__ == args[0]])
 
     def do_update(self, arg):
-        """Updates an instance based on the class name and id by adding or updating attribute"""
+        """
+        Updates an instance based on the class
+        name and id by adding or updating attribute
+        """
         args = arg.split()
         if not args:
             print('** class name missing **')
@@ -139,6 +144,7 @@ class HBNBCommand(cmd.Cmd):
         attribute_value = args[3]
         setattr(objects, attribute_name, attribute_value)
         objects.save()
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
