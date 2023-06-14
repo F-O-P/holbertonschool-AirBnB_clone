@@ -6,6 +6,7 @@ import os
 from datetime import datetime
 from models.review import Review
 
+
 class TestReview(unittest.TestCase):
     ''' Test for Review '''
     def test_init(self):
@@ -22,6 +23,7 @@ class TestReview(unittest.TestCase):
         self.assertEqual(str, type(Review.user_id))
         self.assertIn('user_id', dir(Review()))
         self.assertNotIn('user_id', Jitters.__dict__)
+
 
 if __name__ == '__main__':
     unittest.main()

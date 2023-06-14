@@ -2,6 +2,7 @@ import unittest
 from models.user import User
 from models import BaseModel
 
+
 class TestUser(unittest.TestCase):
     ''' Class reps a user and inherits from basemodel'''
 
@@ -9,7 +10,7 @@ class TestUser(unittest.TestCase):
         ''' Initialize new instance of User class'''
 
         user = User()
-        
+
         self.assertEqual(user.email, "")
         self.assertEqual(user.password, "")
         self.assertEqual(user.first_name, "")
@@ -30,6 +31,7 @@ class TestUser(unittest.TestCase):
         user = User()
 
         self.assertIsInstance(user, BaseModel)
+
 
 if __name__ == '__main__':
     unittest.main()
