@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 ''' UnitTest for FileStorage '''
 import unittest
+import os
 import json
 from datetime import datetime
 from models.engine.file_storage import FileStorage
@@ -35,13 +36,13 @@ class TestFileStorage(unittest.TestCase):
         self.assertIn(test_object, objects.values())
 
     def test_file_storage_save(self):
-        ''' Test the save method of FileStorage '''
-        test_object = BaseModel()
-        self.file_storage.new(test_object)
+        """Test the save method of FileStorage"""
+        obj = BaseModel()
+        self.file_storage.new(obj)
         self.file_storage.save()
-        with open(self.file_path, 'r') as read_later:
-            reading_now = json.load(read_later)
-            self.assertEqual(test_object.to_dict(), reading_now['BaseModel.{}'.format(test_object.id)])
+        with open(self.file_path, "r") as file:
+            file_content = json.load(file)
+        self.assertEqual(obj.to_dict(), file_content[f"BaseModel.{obj.id}"])
 
     def test_file_storage_reload(self):
         ''' Test the reload method of FileStorage '''
