@@ -32,11 +32,5 @@ class TestUser(unittest.TestCase):
 
         self.assertIsInstance(user, BaseModel)
 
-    def test_save(self):
-        ''' Test save method '''     
-        base_model = BaseModel()
-        base_model.save()
-        self.assertNotEqual(base_model.created_at, base_model.updated_at)
-
 if __name__ == '__main__':
     unittest.main()

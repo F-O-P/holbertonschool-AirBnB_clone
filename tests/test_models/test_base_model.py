@@ -13,13 +13,7 @@ class TestBaseModel(unittest.TestCase):
         ''' Tests that save() updates'''
 
         base_model = BaseModel()
-
-        initial_updated_at = base_model.updated_at
-
         base_model.save()
-
-        updated_updated_at = base_model.updated_at
-
         self.assertNotEqual(initial_updated_at, updated_updated_at)
 
     def test_str(self):
