@@ -14,7 +14,7 @@ class TestBaseModel(unittest.TestCase):
 
         base_model = BaseModel()
         base_model.save()
-        self.assertNotEqual(initial_updated_at, updated_updated_at)
+        self.assertNotEqual(base_model.updated_at, base_model.created_at)
 
     def test_str(self):
         ''' Tests output of the string method'''
