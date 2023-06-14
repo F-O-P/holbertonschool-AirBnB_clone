@@ -1,6 +1,7 @@
 import unittest
 from models.amenity import Amenity
 
+
 class TestAmenity(unittest.TestCase):
 
     def test_initialization(self):
@@ -31,6 +32,7 @@ class TestAmenity(unittest.TestCase):
         }
         amenity = Amenity(**amenity_data)
         self.assertEqual(amenity.name, "Funny Honey")
+
 
 if __name__ == '__main__':
     unittest.main()
