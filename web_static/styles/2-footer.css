@@ -9,8 +9,8 @@ footer {
   bottom: 0;
 }
 
-footer span {
-  color: white;
-  font-weight: bold;
-  font-size: 16px;
+footer p {
+  margin: 0;
+  text-align: center;
 }
+
