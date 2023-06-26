@@ -7,7 +7,7 @@
 
 .places h1 {
     text-align: left;
-    vertical-align: top;
+    margin-bottom: 0;
     font-size: 30px;
     flex-basis: 100%;
 }
