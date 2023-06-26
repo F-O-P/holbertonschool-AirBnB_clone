@@ -24,13 +24,13 @@
     opacity: 90%;
 }
 
-.filters locations {
+.filters .locations {
     height: 100%;
     width: 25%;
     border-right: #DDDDDD 1px solid;
 }
 
-.filters amenities {
+.filters .amenities {
     height: 100%;
     width: 25%;
 }
